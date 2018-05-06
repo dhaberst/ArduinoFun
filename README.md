@@ -14,6 +14,11 @@ Wrote a simple blinking LED program.
 ## Chapter 4
 Wrote a program that increases and decreases the PWM (pulse width modulation), essentially fading the LED off and on.
 
+## Chapter 5
+Wrote a program that sequentially turns on LEDS
+
+<img src="https://github.com/dhaberst/ArduinoFun/blob/master/docs/img/Chapter5AdvertisingLED.gif" height="350px">
+
 <hr>
 
 Followed tutorial from [SainSmart](https://www.sainsmart.com/).<br>
