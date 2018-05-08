@@ -21,5 +21,6 @@ Wrote a program that sequentially turns on LEDS
 
 <hr>
 
+## Notes
 Followed tutorial from [SainSmart](https://www.sainsmart.com/).<br>
 Skipped chapter 3 since it was similar to chapter 2.
