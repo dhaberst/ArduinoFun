@@ -8,6 +8,7 @@ int fadeAmount = 5; // amount of brightness variation
 int ledPin = 9;
 
 void setup() {
+  Serial.begin(9600);
   pinMode(ledPin, OUTPUT); // define pin as output
 }
 
