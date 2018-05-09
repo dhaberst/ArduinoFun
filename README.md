@@ -33,5 +33,5 @@ Followed tutorial from [SainSmart](https://www.sainsmart.com/).<br>
 Skipped chapter 3/6.
 
 ## Ideas to implement
-A breakout game using the 8x8 matrix and buttons/potentiometer.<br>
+A breakout game using the 8x8 matrix and buttons/potentiometer or snake.<br>
 A continous prime generator that flashes a light when it finds one and adds it to a list.
