@@ -21,8 +21,13 @@ Wrote a program that sequentially turns on LEDS
 
 <img src="https://github.com/dhaberst/ArduinoFun/blob/master/docs/img/Chapter5AdvertisingLED.gif" height="350px">
 
+## Chapter 7
+Wrote a program that turns on a really loud and annoying buzzer in a siren fashion.
+
+<img src="https://github.com/dhaberst/ArduinoFun/blob/master/docs/img/Chapter7Buzzer.jpg" height="350px">
+
 <hr>
 
 ## Notes
 Followed tutorial from [SainSmart](https://www.sainsmart.com/).<br>
-Skipped chapter 3 since it was similar to chapter 2.
+Skipped chapter 3/6.
