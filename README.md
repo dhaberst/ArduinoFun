@@ -26,6 +26,11 @@ Wrote a program that turns on a really loud and annoying buzzer in a siren fashi
 
 <img src="https://github.com/dhaberst/ArduinoFun/blob/master/docs/img/Chapter7Buzzer.jpg" height="350px">
 
+## Chapter 9
+Wrote a program that uses a potentiometer to either turn a red/green led on depending on the value of it.
+
+<img src="https://github.com/dhaberst/ArduinoFun/blob/master/docs/img/Chapter9Potentiometer.gif" height="350px">
+
 <hr>
 
 ## Notes
