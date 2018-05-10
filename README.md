@@ -29,8 +29,8 @@ Wrote a program that turns on a really loud and annoying buzzer in a siren fashi
 <hr>
 
 ## Notes
-Followed tutorial from [SainSmart](https://www.sainsmart.com/).<br>
-Skipped chapter 3/6.
+Followed tutorial from [SainSmart](https://www.sainsmart.com/) (not a very good tutorial as it lost a lot of detail through poor translation. Just means more experimenting :smiley:).<br>
+Skipped chapters 3/6/8.
 
 ## Ideas to implement
 A breakout game using the 8x8 matrix and buttons/potentiometer or snake.<br>
