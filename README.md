@@ -31,6 +31,11 @@ Wrote a program that uses a potentiometer to either turn a red/green led on depe
 
 <img src="https://github.com/dhaberst/ArduinoFun/blob/master/docs/img/Chapter9Potentiometer.gif" height="350px">
 
+## Chapter 15
+Wrote a program that uses an 8x8 matrix to print out an smiley face that winks.
+
+<img src="https://github.com/dhaberst/ArduinoFun/blob/master/docs/img/Chapter15MatrixLEDWink.gif" height="350px">
+
 <hr>
 
 ## Notes
