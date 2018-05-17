@@ -1,64 +1,160 @@
 /*
-  Potentiometer
+  Matrix LED
 
-  A simple program that takes input from a potentiometer
-  and lights an LED depending on the value
+  A simple program that loops through each of columns and rows and lights it up.
+
+  Code from: http://arduino-er.blogspot.ca/2015/01/how-to-identify-pin-1-of-8x8-led-matrix.html
+  Accessed: 05/14/2018
 */
-// the pin to control ROW
-const int row1 = 2; // the number of the row pin 9
-const int row2 = 3; // the number of the row pin 14
-const int row3 = 4; // the number of the row pin 8
-const int row4 = 5; // the number of the row pin 12
-const int row5 = 17; // the number of the row pin 1
-const int row6 = 16; // the number of the row pin 7
-const int row7 = 15; // the number of the row pin 2
-const int row8 = 14; // the number of the row pin 5
-// the pin to control COl
-const int col1 = 6; // the number of the col pin 13
-const int col2 = 7; // the number of the col pin 3
-const int col3 = 8; // the number of the col pin 4
-const int col4 = 9; // the number of the col pin 10
-const int col5 = 10; // the number of the col pin 6
-const int col6 = 11; // the number of the col pin 11
-const int col7 = 12; // the number of the col pin 15
-const int col8 = 13; // the number of the col pin 16
-void setup() {
-  for (int i = 2; i < 18; i++) {
-    pinMode(i, OUTPUT);
+
+// 2-dimensional array of row pin numbers:
+const int row[8] = {
+  2, 7, 19, 5, 13, 18, 12, 16
+};
+
+// 2-dimensional array of column pin numbers:
+const int col[8] = {
+  6, 11, 10, 3, 17, 4, 8, 9
+};
+
+// 2-dimensional array of pixels:
+int pixels[8][8];
+
+int posX = 7;
+int posY = 7;
+int count = 30;
+bool bg = false;
+long previousTime = 0;
+long interval = 500;
+bool isWinking = false;
+
+void setup()
+{
+  Serial.begin(9600);
+  // initialize the I/O pins as outputs
+  // iterate over the pins:
+  for (int thisPin = 0; thisPin < 8; thisPin++) {
+    // initialize the output pins:
+    pinMode(col[thisPin], OUTPUT);
+    pinMode(row[thisPin], OUTPUT);
+    // take the col pins (i.e. the cathodes) high to ensure that
+    // the LEDS are off:
+    digitalWrite(col[thisPin], HIGH);
   }
-  
-  pinMode(row5, OUTPUT);
-  pinMode(row6, OUTPUT);
-  pinMode(row7, OUTPUT);
-  pinMode(row8, OUTPUT);
- 
-  for (int i = 2; i < 18; i++) {
-    digitalWrite(i, LOW);
-  }
- 
- digitalWrite(row5, LOW);
- digitalWrite(row6, LOW);
- digitalWrite(row7, LOW);
- digitalWrite(row8, LOW);
+
+  bg = false;
+
+  setupScreen();
+  print(pixels);
 }
 
-void loop() {
-  digitalWrite(row1, HIGH);
-  digitalWrite(row2, HIGH);
-  digitalWrite(row3, HIGH);
-  digitalWrite(row4, HIGH);
-  digitalWrite(row5, HIGH);
-  digitalWrite(row6, HIGH);
-  digitalWrite(row7, HIGH);
-  digitalWrite(row8, HIGH);
-  digitalWrite(col1, HIGH);
-  digitalWrite(col2, HIGH);
-  digitalWrite(col3, HIGH);
-  digitalWrite(col4, HIGH);
-  digitalWrite(col5, HIGH);
-  digitalWrite(col6, HIGH);
-  digitalWrite(col7, HIGH);
-  digitalWrite(col8, HIGH);
-  
-  delay(1000);
+void print(int matrix[8][8])
+{
+  int i, j;
+  for (i = 0; i < 8; ++i)
+  {
+    for (j = 0; j < 8; ++j)
+      Serial.print(matrix[i][j]);
+    Serial.print("\n");
+  }
+}
+
+void smiley1() {
+  int temp[8][8] = {
+    {LOW , LOW , HIGH, HIGH, HIGH, HIGH, LOW , LOW },
+    {LOW , LOW , HIGH, HIGH, HIGH, HIGH, LOW , LOW },
+    {LOW , LOW , HIGH, HIGH, HIGH, HIGH, LOW , LOW },
+    {HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH},
+    {HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH},
+    {HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH},
+    {HIGH, LOW , HIGH, HIGH, HIGH, HIGH, LOW , HIGH},
+    {HIGH, LOW , LOW , LOW , LOW , LOW , LOW , HIGH}
+  };
+
+  copyToPixels(temp);
+}
+
+void smileyWink() {
+  int temp[8][8] = {
+    {LOW , LOW , HIGH, HIGH, HIGH, HIGH, HIGH, HIGH},
+    {LOW , LOW , HIGH, HIGH, HIGH, HIGH, LOW , LOW },
+    {LOW , LOW , HIGH, HIGH, HIGH, HIGH, HIGH, HIGH},
+    {HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH},
+    {HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH},
+    {HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH},
+    {HIGH, LOW , HIGH, HIGH, HIGH, HIGH, LOW , HIGH},
+    {HIGH, LOW , LOW , LOW , LOW , LOW , LOW , HIGH}
+  };
+
+  copyToPixels(temp);
+}
+
+void loop()
+{
+  unsigned long currentTime = millis();
+
+  if (currentTime - previousTime > interval) {
+    previousTime = currentTime;
+
+    if (isWinking) {
+      smiley1();
+    } else {
+      smileyWink();
+    }
+
+    isWinking = !isWinking;
+  }
+
+  refreshScreen();
+}
+
+void copyToPixels(int a[8][8]) {
+  for (int x = 0; x < 8; x++) {
+    for (int y = 0; y < 8; y++) {
+      pixels[x][y] = a[x][y];
+    }
+  }
+}
+
+void setupScreen()
+{
+  if (bg) {
+    //ON all others
+    for (int x = 0; x < 8; x++) {
+      for (int y = 0; y < 8; y++) {
+        pixels[x][y] = LOW;
+      }
+    }
+  }
+  else {
+    //OFF all others
+    for (int x = 0; x < 8; x++) {
+      for (int y = 0; y < 8; y++) {
+        pixels[x][y] = HIGH;
+      }
+    }
+  }
+}
+
+void refreshScreen()
+{
+  // iterate over the rows (anodes):
+  for (int thisRow = 0; thisRow < 8; thisRow++) {
+    // take the row pin (anode) high:
+    digitalWrite(row[thisRow], HIGH);
+    // iterate over the cols (cathodes):
+    for (int thisCol = 0; thisCol < 8; thisCol++) {
+      // get the state of the current pixel;
+      int thisPixel = pixels[thisRow][thisCol];
+      // when the row is HIGH and the col is LOW,
+      // the LED where they meet turns on:
+      digitalWrite(col[thisCol], thisPixel);
+      // turn the pixel off:
+      if (thisPixel == LOW) {
+        digitalWrite(col[thisCol], HIGH);
+      }
+    }
+    // take the row pin low to turn off the whole row:
+    digitalWrite(row[thisRow], LOW);
+  }
 }
